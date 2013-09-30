@@ -1,10 +1,12 @@
 include_recipe 'apt'
 
-apt_repository 'pitti-postgresql-ppa' do
-  uri 'http://ppa.launchpad.net/pitti/postgresql/ubuntu'
-  distribution node['lsb']['codename']
-  components %w(main)
-  keyserver 'keyserver.ubuntu.com'
-  key '8683D8A2'
+apt_repository "apt.postgresql.org" do
+  uri "http://apt.postgresql.org/pub/repos/apt"
+  distribution "#{node["lsb"]["codename"]}-pgdg"
+  components ["main"]
+  key "http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc"
   action :add
 end
+
+# automatically get repository key updates
+package "pgdg-keyring"
